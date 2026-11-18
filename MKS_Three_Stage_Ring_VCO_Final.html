@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MKS | Three-Stage CMOS Ring VCO</title>
+<style>
+:root{--bg:#050914;--panel:rgba(14,25,45,.68);--line:rgba(130,190,255,.2);--cyan:#57d8ff;--blue:#5794ff;--red:#ff6c82;--text:#edf5ff;--muted:#9aadc7;--green:#64e5bd;--shadow:0 20px 70px rgba(0,0,0,.38)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:radial-gradient(ellipse at 15% 0%,#102b50 0,transparent 38%),radial-gradient(ellipse at 90% 15%,#241333 0,transparent 32%),linear-gradient(145deg,#050914,#081323 55%,#080b17);min-height:100vh}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.13;background-image:linear-gradient(rgba(160,200,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(160,200,255,.12) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
+a{color:var(--cyan);text-decoration:none}.wrap{width:min(1180px,92%);margin:auto}.nav{position:sticky;top:0;z-index:20;background:rgba(5,10,20,.72);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}.navin{height:66px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-weight:800;letter-spacing:.12em}.brand span{color:var(--cyan)}.links{display:flex;gap:20px;font-size:13px;color:var(--muted)}.links a{color:var(--muted)}.links a:hover{color:white}
+.hero{padding:78px 0 52px;display:grid;grid-template-columns:1.1fr .9fr;gap:38px;align-items:center}.eyebrow{color:var(--cyan);font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:800}.hero h1{font-size:clamp(36px,5vw,66px);line-height:1.03;letter-spacing:-.045em;margin:18px 0}.hero h1 em{font-style:normal;color:var(--cyan);text-shadow:0 0 35px #3ca9ff66}.lead{color:#b6c7dd;line-height:1.75;max-width:680px;font-size:16px}.chips{display:flex;flex-wrap:wrap;gap:9px;margin:24px 0}.chip{border:1px solid var(--line);background:rgba(80,150,220,.09);padding:8px 12px;border-radius:99px;color:#cfe7ff;font-size:12px}.glass{background:linear-gradient(135deg,rgba(26,48,77,.68),rgba(10,19,36,.66));border:1px solid rgba(153,204,255,.22);border-radius:22px;box-shadow:var(--shadow);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}.hero-visual{padding:20px;position:relative;overflow:hidden}.hero-visual:after{content:"";position:absolute;width:240px;height:240px;border-radius:50%;background:#36baff20;filter:blur(40px);right:-80px;top:-90px;pointer-events:none}.mini-title{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.15em;margin:0 0 16px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.metric{padding:13px;border-radius:14px;background:rgba(3,10,22,.45);border:1px solid var(--line)}.metric b{display:block;font-size:20px;color:white}.metric small{color:var(--muted);font-size:11px}
+section{padding:36px 0;scroll-margin-top:82px}.section-head{margin-bottom:22px}.section-head .eyebrow{margin-bottom:8px}.section-head h2{font-size:clamp(25px,3vw,38px);margin:0 0 9px;letter-spacing:-.03em}.section-head p{color:var(--muted);line-height:1.65;margin:0;max-width:800px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{padding:22px}.card h3{margin:0 0 10px;font-size:18px}.card p,.card li{color:#afc0d6;line-height:1.7;font-size:14px}.card ul{padding-left:18px;margin:10px 0 0}.tag{display:inline-block;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--cyan);margin-bottom:10px}
+.diagram{padding:22px;overflow:hidden}.stage-row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:center;position:relative}.stage{position:relative;text-align:center;padding:20px 12px;border:1px solid rgba(90,200,255,.4);border-radius:16px;background:linear-gradient(145deg,rgba(42,107,158,.25),rgba(12,25,45,.7));min-height:132px;display:flex;flex-direction:column;justify-content:center}.stage strong{font-size:17px}.stage small{color:var(--muted);margin-top:7px}.inv-symbol{font-size:28px;color:var(--cyan);margin-bottom:4px}.stage:not(:last-child):after{content:"➜";position:absolute;right:-22px;top:45%;color:var(--cyan);font-size:19px}.feedback{margin:18px auto 0;text-align:center;color:var(--red);font-size:13px;border-top:1px dashed rgba(255,108,130,.4);padding-top:15px;max-width:520px}.equation{font-family:Georgia,serif;color:#fff;background:rgba(1,7,17,.55);border:1px solid var(--line);border-radius:14px;padding:15px;text-align:center;font-size:22px;margin:12px 0}.note{border-left:3px solid var(--cyan);padding:12px 15px;background:rgba(60,150,220,.08);border-radius:0 12px 12px 0;color:#bdd1e9;font-size:13px;line-height:1.65}
+.device-img{width:100%;height:auto;border-radius:13px;border:1px solid var(--line);display:block;background:#070b13}.img-caption{font-size:12px;color:var(--muted);line-height:1.5;margin-top:9px}.device-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.data-table{width:100%;border-collapse:collapse;font-size:13px;overflow:hidden;border-radius:12px}.data-table th,.data-table td{text-align:left;padding:12px;border-bottom:1px solid rgba(150,190,230,.13)}.data-table th{color:var(--cyan);font-weight:700;background:rgba(55,130,200,.1)}.data-table td{color:#d4e2f3}.data-table tr:last-child td{border-bottom:0}
+.controls{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:7px}.field input,.field select{width:100%;background:rgba(2,9,20,.75);border:1px solid rgba(120,180,240,.3);border-radius:11px;color:white;padding:12px;font-size:14px;outline:none}.field input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #4acbff1b}.btn{border:0;border-radius:12px;padding:12px 18px;color:#04101d;font-weight:800;background:linear-gradient(100deg,var(--cyan),#83aaff);cursor:pointer;box-shadow:0 8px 25px #32aaff25}.btn.secondary{background:rgba(120,170,230,.13);color:#dceeff;border:1px solid var(--line);box-shadow:none}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.hint{font-size:12px;color:var(--muted);line-height:1.6;margin-top:10px}.resultgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}.resultbox{padding:18px;border-radius:15px;background:rgba(0,7,17,.48);border:1px solid var(--line)}.resultbox .big{font-size:27px;font-weight:800;color:var(--cyan)}.resultbox small{color:var(--muted)}.chartbox{padding:16px}.chartbox h3{font-size:15px;margin:0 0 12px}.chartbox canvas{width:100%;height:230px;display:block}.status{color:var(--green);font-size:12px;margin-top:10px}.warning{color:#ffd28b}.footer{padding:35px 0 55px;color:#8195b0;font-size:12px;border-top:1px solid var(--line);margin-top:35px}
+@media(max-width:800px){.hero{grid-template-columns:1fr;padding-top:50px}.links{display:none}.grid2,.grid3,.device-grid,.resultgrid{grid-template-columns:1fr}.controls{grid-template-columns:1fr 1fr}.stage-row{gap:9px}.stage{padding:12px 6px;min-height:116px}.stage strong{font-size:13px}.stage small{font-size:10px}.stage:not(:last-child):after{right:-12px;font-size:13px}.metrics{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:480px){.controls{grid-template-columns:1fr 1fr}.card{padding:17px}.hero{padding-bottom:25px}.stage-row{gap:6px}.stage:not(:last-child):after{right:-10px}}
+</style>
+</head>
+<body>
+<header class="nav"><div class="wrap navin"><div class="brand">MKS <span>VCO LAB</span></div><nav class="links"><a href="#principle">Principle</a><a href="#inverter">CMOS Inverter</a><a href="#cadence">Cadence</a><a href="#tuning">Tuning</a><a href="#results">Results</a></nav></div></header>
+<main class="wrap">
+<div class="hero">
+ <div><div class="eyebrow">CMOS oscillator study · 180 nm</div><h1>Three-Stage<br><em>Ring VCO</em></h1><p class="lead">A compact study of a voltage-controlled ring oscillator built from three CMOS inverter stages. Explore the inverter operation, loop oscillation condition, delay-based frequency control, Cadence simulation setup, and measured results.</p><div class="chips"><span class="chip">3-stage inverter ring</span><span class="chip">NMOS + PMOS</span><span class="chip">180 nm CMOS</span><span class="chip">Cadence Virtuoso</span></div></div>
+ <div class="glass hero-visual" style="padding:22px 20px 18px">
+  <p class="mini-title">Inside the oscillation loop</p>
+  <div style="position:relative;padding:4px 0 0">
+    <svg viewBox="0 0 520 250" role="img" aria-label="Three inverter stages connected in a closed feedback loop" style="display:block;width:100%;height:auto;max-height:245px">
+      <defs>
+        <linearGradient id="heroNode" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#164d78"/><stop offset="1" stop-color="#101d38"/>
+        </linearGradient>
+        <marker id="heroArrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0 0 L6 3 L0 6" fill="#57d8ff"/>
+        </marker>
+        <filter id="heroGlow"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <path d="M165 67 C220 18 300 18 355 67" fill="none" stroke="#57d8ff" stroke-width="2.5" marker-end="url(#heroArrow)" opacity=".95"/>
+      <path d="M390 105 C425 145 390 190 330 195" fill="none" stroke="#57d8ff" stroke-width="2.5" marker-end="url(#heroArrow)" opacity=".95"/>
+      <path d="M190 195 C125 190 95 145 130 105" fill="none" stroke="#57d8ff" stroke-width="2.5" marker-end="url(#heroArrow)" opacity=".95"/>
+      <g filter="url(#heroGlow)">
+        <rect x="42" y="65" width="130" height="62" rx="15" fill="url(#heroNode)" stroke="#57d8ff" stroke-opacity=".8"/>
+        <rect x="348" y="65" width="130" height="62" rx="15" fill="url(#heroNode)" stroke="#57d8ff" stroke-opacity=".8"/>
+        <rect x="195" y="165" width="130" height="62" rx="15" fill="url(#heroNode)" stroke="#57d8ff" stroke-opacity=".8"/>
+      </g>
+      <g fill="#f2f8ff" font-size="15" font-weight="700" text-anchor="middle">
+        <text x="107" y="91">INV-1</text><text x="413" y="91">INV-2</text><text x="260" y="191">INV-3</text>
+      </g>
+      <g fill="#a9c5e2" font-size="11" text-anchor="middle">
+        <text x="107" y="109">Invert + delay</text><text x="413" y="109">Invert + delay</text><text x="260" y="209">Invert + delay</text>
+      </g>
+      <text x="260" y="119" fill="#57d8ff" font-size="11" letter-spacing="2" text-anchor="middle">CLOSED FEEDBACK LOOP</text>
+      <text x="260" y="143" fill="#dcecff" font-size="12" text-anchor="middle">DELAY → PHASE → REGENERATION</text>
+    </svg>
+  </div>
+  <div class="equation" style="font-size:21px;margin:5px 0 10px">f<sub>osc</sub> ≈ 1 / (2N t<sub>d</sub>)</div>
+  <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+    <span style="font-size:11px;color:var(--muted)">N = 3 inverter stages</span>
+    <span style="font-size:11px;color:var(--cyan)">t<sub>d</sub> = average stage delay</span>
+  </div>
+  <p class="hint" style="margin-bottom:0">Each stage inverts and delays the transition. The closed loop can sustain oscillation when its phase and gain conditions are satisfied. The equation is a first-order estimate, not a substitute for transient simulation.</p>
+</div>
+</div>
+
+<section id="principle"><div class="section-head"><div class="eyebrow">01 · Concept</div><h2>What is a Ring VCO?</h2><p>A ring voltage-controlled oscillator generates a periodic output by connecting an odd number of inverting delay stages in a closed feedback loop. Changing the control condition changes the propagation delay, which changes the oscillation frequency.</p></div>
+<div class="grid3"><article class="glass card"><span class="tag">Structure</span><h3>Odd number of stages</h3><p>Each CMOS inverter contributes an inversion and a finite propagation delay. Three stages form the feedback loop used in this study.</p></article><article class="glass card"><span class="tag">Control</span><h3>Delay tuning</h3><p>Changing NMOS/PMOS sizing or the supply/control voltage changes charging and discharging strength, affecting stage delay and frequency.</p></article><article class="glass card"><span class="tag">Applications</span><h3>On-chip clock generation</h3><p>Ring VCOs are useful in PLLs, clock and data recovery, clock generation, frequency synthesis, and timing circuits where compact integration is important.</p></article></div>
+<div class="grid2" style="margin-top:16px"><article class="glass card"><span class="tag">Common VCO types</span><h3>VCO classification</h3><p>LC VCO · Ring VCO · Relaxation VCO · Crystal-based oscillator with voltage tuning.</p><p class="hint">The ring VCO is the focus of this design.</p></article><article class="glass card"><span class="tag">Why choose a ring VCO?</span><h3>Key merits</h3><p>Small silicon area, simple CMOS implementation, easy integration, wide tuning potential, and suitability for multi-phase clock generation. Its main trade-offs are typically higher phase noise and greater supply sensitivity than a well-designed LC VCO.</p></article></div></section>
+
+<section id="inverter"><div class="section-head"><div class="eyebrow">02 · Building block</div><h2>First understand the CMOS inverter</h2><p>A CMOS inverter uses one PMOS transistor as the pull-up device and one NMOS transistor as the pull-down device. Their gates share the input and their drains meet at the output.</p></div>
+<div class="grid2">
+ <article class="glass card"><span class="tag">Input = LOW</span><h3>PMOS ON · NMOS OFF</h3><p>The PMOS connects the output toward VDD. The output becomes logic HIGH.</p><div class="equation">V<sub>in</sub> = 0 → V<sub>out</sub> ≈ V<sub>DD</sub></div></article>
+ <article class="glass card"><span class="tag">Input = HIGH</span><h3>PMOS OFF · NMOS ON</h3><p>The NMOS connects the output toward ground. The output becomes logic LOW.</p><div class="equation">V<sub>in</sub> = V<sub>DD</sub> → V<sub>out</sub> ≈ 0</div></article>
+</div>
+<div class="glass card" style="margin-top:16px"><h3>Why the inverter creates delay</h3><p>The output node has capacitance from transistor junctions, gate loading, wiring, and connected stages. When the input changes, the PMOS or NMOS charges or discharges this capacitance. The finite current and capacitance produce propagation delay (t<sub>p</sub>). In a ring, each stage passes a delayed, inverted transition to the next stage.</p><div class="note">For a practical design, distinguish rise delay (t<sub>PLH</sub>) and fall delay (t<sub>PHL</sub>). A common first-order stage delay is t<sub>d</sub> ≈ (t<sub>PLH</sub> + t<sub>PHL</sub>)/2.</div></div>
+</section>
+
+<section id="three-stage"><div class="section-head"><div class="eyebrow">03 · Three-stage ring</div><h2>Three inverter stages connected in a loop</h2><p>This is the functional block representation, not the transistor-level Cadence schematic. The output of the third inverter feeds the input of the first inverter.</p></div>
+<div class="glass diagram"><div class="stage-row"><div class="stage"><div class="inv-symbol">▷○</div><strong>INV-1</strong><small>Inverts + delays</small></div><div class="stage"><div class="inv-symbol">▷○</div><strong>INV-2</strong><small>Inverts + delays</small></div><div class="stage"><div class="inv-symbol">▷○</div><strong>INV-3</strong><small>Inverts + delays</small></div></div><div class="feedback">↶ Feedback: output of INV-3 is connected to input of INV-1</div><p class="hint">The loop is closed: INV-1 → INV-2 → INV-3 → INV-1. The odd number of inversions makes the loop regenerative with delay, allowing oscillation when the loop gain and phase conditions are satisfied.</p></div>
+</section>
+
+<section id="oscillation"><div class="section-head"><div class="eyebrow">04 · Oscillation condition</div><h2>Rules that must be satisfied</h2><p>Oscillation is not caused simply by connecting three inverters. The feedback loop must satisfy the phase and gain conditions at the oscillation frequency.</p></div>
+<div class="grid2">
+ <article class="glass card"><span class="tag">Barkhausen phase condition</span><h3>Total loop phase</h3><div class="equation">∠Aβ = 0° (mod 360°)</div><p>For three inverters, the low-frequency inversion contributes 180° around the loop. The frequency-dependent phase lag from the stages supplies the remaining phase shift so that the total loop phase is 360° (or an integer multiple).</p></article>
+ <article class="glass card"><span class="tag">Loop gain condition</span><h3>Startup and steady state</h3><div class="equation">|Aβ| ≥ 1</div><p>For startup, the small-signal loop gain must be greater than unity at the oscillation frequency. As amplitude grows, nonlinear limiting reduces the effective gain toward unity in steady state.</p></article>
+</div>
+<div class="glass card" style="margin-top:16px"><h3>First-order frequency relation</h3><div class="equation">f<sub>osc</sub> ≈ 1 / (2 N t<sub>d</sub>) &nbsp; ; &nbsp; N = 3</div><p>For a three-stage ring, f<sub>osc</sub> ≈ 1/(6t<sub>d</sub>). This is an approximate relation assuming similar stage delays and a simplified transition model. Extract the actual frequency from the Cadence transient waveform rather than relying only on this equation.</p></div>
+</section>
+
+<section id="cadence"><div class="section-head"><div class="eyebrow">05 · Design and simulation</div><h2>Build and simulate in Cadence</h2><p>Use the ML-recommended NW, PW and VDD values in the corresponding transistor properties. The website does not need your Cadence screenshots or project files.</p></div>
+<div class="grid2">
+ <div class="glass card"><span class="tag">NMOS · n18 device model</span><h3>NMOS properties</h3><table class="data-table"><tbody><tr><td>Model name</td><td>n18</td></tr><tr><td>Gate length (L)</td><td>0.18 µm</td></tr><tr><td>Finger width</td><td><b>NW — ML recommendation</b></td></tr><tr><td>Number of fingers (nf)</td><td>1 (reference setup)</td></tr></tbody></table><p class="hint">In the NMOS CDF properties, enter the recommended NW in the finger-width field used by your schematic variable.</p></div>
+ <div class="glass card"><span class="tag">PMOS · p18 device model</span><h3>PMOS properties</h3><table class="data-table"><tbody><tr><td>Model name</td><td>p18</td></tr><tr><td>Gate length (L)</td><td>0.18 µm</td></tr><tr><td>Finger width</td><td><b>PW — ML recommendation</b></td></tr><tr><td>Number of fingers (nf)</td><td>1 (reference setup)</td></tr></tbody></table><p class="hint">In the PMOS CDF properties, enter the recommended PW in the finger-width field used by your schematic variable.</p></div>
+</div>
+<div class="glass card" style="margin-top:16px"><span class="tag">Three-stage ring · functional block diagram</span><h3>Three inverter stages connected in a feedback loop</h3>
+<svg viewBox="0 0 900 260" role="img" aria-label="Three CMOS inverter blocks connected in a ring with feedback" style="width:100%;height:auto;display:block">
+ <defs><linearGradient id="blk" x1="0" x2="1"><stop stop-color="#123b60"/><stop offset="1" stop-color="#10223f"/></linearGradient><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#57d8ff"/></marker></defs>
+ <g fill="url(#blk)" stroke="#57d8ff" stroke-width="2"><rect x="55" y="55" width="190" height="92" rx="16"/><rect x="355" y="55" width="190" height="92" rx="16"/><rect x="655" y="55" width="190" height="92" rx="16"/></g>
+ <g fill="#eaf6ff" font-size="22" font-weight="700" text-anchor="middle"><text x="150" y="93">INV-1</text><text x="450" y="93">INV-2</text><text x="750" y="93">INV-3</text></g>
+ <g fill="#9fb8d5" font-size="14" text-anchor="middle"><text x="150" y="119">CMOS inverter</text><text x="450" y="119">CMOS inverter</text><text x="750" y="119">CMOS inverter</text></g>
+ <g stroke="#57d8ff" stroke-width="3" fill="none" marker-end="url(#arr)"><path d="M245 101 H350"/><path d="M545 101 H650"/><path d="M750 147 V205 H150 V152"/></g>
+ <g fill="#ff7189" font-size="14" text-anchor="middle"><text x="450" y="232">Feedback: output of stage 3 returns to input of stage 1</text></g>
+</svg>
+<p class="hint">Each inverter contains one PMOS pull-up and one NMOS pull-down device. The three-stage loop is the conceptual circuit diagram; it is not a transistor-level schematic.</p></div>
+<div class="glass card" style="margin-top:16px"><h3>Cadence simulation procedure</h3><ol style="color:#afc0d6;line-height:1.9;font-size:14px;padding-left:20px"><li>Open your three-stage ring VCO schematic in Cadence Virtuoso.</li><li>Set the NMOS finger-width variable to the recommended <b>NW</b>.</li><li>Set the PMOS finger-width variable to the recommended <b>PW</b>.</li><li>Set the supply source to the recommended <b>VDD</b>.</li><li>Keep the gate length and finger count consistent with your selected 180 nm design setup.</li><li>Run transient analysis and wait until the waveform reaches steady-state oscillation.</li><li>Measure the output period/frequency and average power, then enter those measured values below.</li></ol><div class="note">The n18/p18 labels above are model labels from the reference device setup. The page uses generic 180 nm CMOS wording and does not identify a foundry or PDK vendor. Confirm the parameter units in your own PDK before simulation.</div></div>
+</section>
+
+<section id="tuning"><div class="section-head"><div class="eyebrow">06 · ML inverse design</div><h2>Enter target frequency → get transistor sizing</h2><p>Enter a target frequency. The connected Extra Trees models will search for a suitable NW, PW and VDD combination and estimate frequency and average power.</p></div>
+<div class="glass card">
+ <div class="controls"><div class="field"><label for="target">Target frequency (MHz)</label><input id="target" type="number" min="0.001" step="any" placeholder="e.g. 2500"></div></div>
+ <div class="actions"><button class="btn" onclick="getDesign()">Generate ML design</button><button class="btn secondary" onclick="resetDesign()">New target</button></div>
+ <p class="hint">Enter a target within the model's measured training range for the most reliable recommendation. The range is guidance, not a hard input limit. Predictions outside the training range are extrapolations and may be unreliable.</p>
+ <div id="mlResults" style="display:none;margin-top:18px">
+  <h3>Recommended design parameters</h3>
+  <div class="resultgrid">
+   <div class="resultbox"><small>NMOS finger width</small><div class="big" id="recNW">—</div><small>NW (µm)</small></div>
+   <div class="resultbox"><small>PMOS finger width</small><div class="big" id="recPW">—</div><small>PW (µm)</small></div>
+   <div class="resultbox"><small>Supply voltage</small><div class="big" id="recVDD">—</div><small>VDD (V)</small></div>
+   <div class="resultbox"><small>ML predicted frequency</small><div class="big" id="predFreq">—</div><small>MHz</small></div>
+   <div class="resultbox"><small>ML predicted average power</small><div class="big" id="predPower">—</div><small>mW</small></div>
+   <div class="resultbox"><small>Target frequency error</small><div class="big" id="targetErr">—</div><small>Absolute percentage difference</small></div>
+  </div>
+  <div class="note" style="margin-top:14px">Copy these NW, PW and VDD values into your Cadence design variables and corresponding NMOS/PMOS properties. Then run transient simulation and enter the measured results below.</div>
+ </div>
+ <div class="status" id="status">Ready. Enter a target frequency and generate an ML design.</div>
+</div>
+<div class="glass card" style="margin-top:16px"><div class="eyebrow">07 · Cadence verification</div><h3>Enter your measured simulation results</h3><p class="hint">After running Cadence, enter the steady-state oscillation frequency and average power. The website compares them with the ML predictions for this design.</p>
+ <div class="controls" style="margin-top:15px">
+  <div class="field"><label for="cadfreq">Cadence measured frequency (MHz)</label><input id="cadfreq" type="number" min="0" step="any" placeholder="Measured frequency"></div>
+  <div class="field"><label for="power">Cadence average power (mW)</label><input id="power" type="number" min="0" step="any" placeholder="Average power"></div>
+ </div>
+ <div class="actions"><button class="btn" onclick="saveRun()">Compare and save result</button><button class="btn secondary" onclick="exportCSV()">Download CSV</button></div>
+ <div class="resultgrid" id="compareResults" style="display:none">
+  <div class="resultbox"><small>Absolute frequency error</small><div class="big" id="freqAbsErr">—</div><small>MHz</small></div>
+  <div class="resultbox"><small>Frequency error</small><div class="big" id="freqPctErr">—</div><small>%</small></div>
+  <div class="resultbox"><small>Absolute power error</small><div class="big" id="powerAbsErr">—</div><small>mW</small></div>
+  <div class="resultbox"><small>Power error</small><div class="big" id="powerPctErr">—</div><small>%</small></div>
+ </div>
+</div>
+</section>
+
+<section id="results"><div class="section-head"><div class="eyebrow">07 · Results and verification</div><h2>Simulation results dashboard</h2><p>Each saved row represents a Cadence run entered by you. The charts update from those saved measurements. No synthetic Cadence data is inserted.</p></div>
+<div class="grid2">
+ <div class="glass chartbox"><h3>ML-predicted vs Cadence frequency (MHz)</h3><canvas id="freqChart" width="600" height="260"></canvas></div>
+ <div class="glass chartbox"><h3>ML-predicted vs Cadence average power (mW)</h3><canvas id="powerChart" width="600" height="260"></canvas></div>
+</div>
+<div class="glass card" style="margin-top:16px;overflow-x:auto"><h3>Saved Cadence verification table</h3><table class="data-table" id="history"><thead><tr><th>#</th><th>Target (MHz)</th><th>NW (µm)</th><th>PW (µm)</th><th>VDD (V)</th><th>ML freq. (MHz)</th><th>Cadence freq. (MHz)</th><th>Freq. abs. error (%)</th><th>ML power (mW)</th><th>Cadence power (mW)</th><th>Power abs. error (%)</th></tr></thead><tbody><tr><td colspan="11">No Cadence measurements saved yet.</td></tr></tbody></table><div class="actions"><button class="btn secondary" onclick="clearHistory()">Clear local history</button></div><p class="hint">Results are stored locally in this visitor’s browser. No login or mandatory submission is required. Visitors can download their own CSV.</p></div>
+</section>
+<div class="footer">MKS VCO LAB · Three-stage CMOS Ring VCO · Educational and research presentation. Replace illustrative descriptions with final measured values and verified PDK parameters before publication.</div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const API_BASE = "https://mks-vco-ml-backend.onrender.com"; // Set this to your deployed Python API URL when backend is ready.
+let historyData=[];
+let currentDesign=null;
+try{historyData=JSON.parse(localStorage.getItem("mks_ringvco_history")||"[]")}catch(e){historyData=[]}
+function setStatus(msg,warning=false){$("status").textContent=msg;$("status").className=warning?"status warning":"status";}
+async function getDesign(){
+ const target=Number($("target").value);
+ if(!(target>0)){setStatus("Enter a positive target frequency in MHz.",true);return;}
+ if(!API_BASE && location.protocol!=="file:" && !location.hostname.includes("localhost")){
+   setStatus("The website interface is ready, but the Python ML backend URL has not been connected yet. Configure API_BASE after deploying the model backend.",true);return;
+ }
+ setStatus("Requesting a recommendation from the Extra Trees models…");
+ try{
+  const res=await fetch(`${API_BASE}/api/design`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({target_frequency_mhz:target})});
+  if(!res.ok)throw new Error(`Backend returned HTTP ${res.status}`);
+  const d=await res.json();
+  currentDesign={target:target,nw:Number(d.nw_um),pw:Number(d.pw_um),vdd:Number(d.vdd_v),predFreq:Number(d.predicted_frequency_mhz),predPower:Number(d.predicted_power_mw),targetErr:Number(d.target_error_percent)};
+  $("recNW").textContent=currentDesign.nw.toFixed(6);$("recPW").textContent=currentDesign.pw.toFixed(6);$("recVDD").textContent=currentDesign.vdd.toFixed(3);
+  $("predFreq").textContent=currentDesign.predFreq.toFixed(3);$("predPower").textContent=currentDesign.predPower.toFixed(6);$("targetErr").textContent=currentDesign.targetErr.toFixed(3)+"%";
+  $("mlResults").style.display="block";setStatus(d.warning||"ML recommendation generated. Enter these values in Cadence and run transient simulation.");
+ }catch(e){setStatus("Could not obtain an ML recommendation: "+e.message+". Check that the Python backend is running and API_BASE is correct.",true);}
+}
+function resetDesign(){
+ currentDesign=null;$("target").value="";$("cadfreq").value="";$("power").value="";
+ $("mlResults").style.display="none";$("compareResults").style.display="none";
+ setStatus("Ready for a new target frequency.");
+}
+function saveRun(){
+ if(!currentDesign){setStatus("Generate an ML design first. The comparison needs the predicted frequency and power.",true);return;}
+ const cadence=Number($("cadfreq").value),cadPower=Number($("power").value);
+ if(!(cadence>0)||!(cadPower>=0)||$("power").value===""){setStatus("Enter the measured Cadence frequency and average power before comparing.",true);return;}
+ const freqAbs=Math.abs(cadence-currentDesign.predFreq),freqPct=freqAbs/Math.abs(cadence)*100;
+ const powerAbs=Math.abs(cadPower-currentDesign.predPower),powerPct=(cadPower===0?(powerAbs===0?0:null):powerAbs/cadPower*100);
+ const row={date:new Date().toLocaleString(),target:currentDesign.target,nw:currentDesign.nw,pw:currentDesign.pw,vdd:currentDesign.vdd,predFreq:currentDesign.predFreq,cadence,freqAbs,freqPct,predPower:currentDesign.predPower,cadPower,powerAbs,powerPct};
+ historyData.push(row);localStorage.setItem("mks_ringvco_history",JSON.stringify(historyData));
+ $("freqAbsErr").textContent=freqAbs.toFixed(4);$("freqPctErr").textContent=freqPct.toFixed(3)+"%";
+ $("powerAbsErr").textContent=powerAbs.toFixed(6);$("powerPctErr").textContent=powerPct===null?"—":powerPct.toFixed(3)+"%";
+ $("compareResults").style.display="grid";render();
+ setStatus("Comparison saved in this browser. You can download the verification CSV.");
+}
+function render(){
+ const body=$("history").querySelector("tbody");
+ if(!historyData.length){body.innerHTML='<tr><td colspan="11">No Cadence measurements saved yet.</td></tr>';}
+ else{body.innerHTML=historyData.map((r,i)=>`<tr><td>${i+1}</td><td>${r.target.toFixed(2)}</td><td>${r.nw.toFixed(6)}</td><td>${r.pw.toFixed(6)}</td><td>${r.vdd.toFixed(3)}</td><td>${r.predFreq.toFixed(3)}</td><td>${r.cadence.toFixed(3)}</td><td>${r.freqPct.toFixed(3)}</td><td>${r.predPower.toFixed(6)}</td><td>${r.cadPower.toFixed(6)}</td><td>${r.powerPct===null?"—":r.powerPct.toFixed(3)}</td></tr>`).join("");}
+ drawChart("freqChart",historyData.map(r=>({a:r.predFreq,b:r.cadence})), "ML prediction","Cadence",true);
+ drawChart("powerChart",historyData.map(r=>({a:r.predPower,b:r.cadPower})), "ML prediction","Cadence",true);
+}
+function drawChart(id,data,labelA,labelB,dual){
+ const c=$(id),ctx=c.getContext("2d"),w=c.width,h=c.height;ctx.clearRect(0,0,w,h);
+ ctx.strokeStyle="rgba(170,200,235,.16)";ctx.fillStyle="#9aadc7";ctx.font="12px system-ui";
+ for(let i=0;i<5;i++){let y=22+i*(h-55)/4;ctx.beginPath();ctx.moveTo(48,y);ctx.lineTo(w-14,y);ctx.stroke();}
+ if(!data.length){ctx.fillStyle="#9aadc7";ctx.textAlign="center";ctx.fillText("Save a Cadence comparison to populate this chart",w/2,h/2);return;}
+ let vals=data.flatMap(d=>dual?[d.a,d.b]:[d.b]);let min=Math.min(0,...vals),max=Math.max(...vals);if(max===min)max=min+1;let pad=(max-min)*.12;min-=pad;max+=pad;
+ const x=i=>48+(data.length===1?(w-70)/2:i*(w-70)/(data.length-1)),y=v=>h-32-(v-min)/(max-min)*(h-60);
+ for(let i=0;i<5;i++){let v=max-i*(max-min)/4;ctx.fillText(v.toFixed(Math.abs(v)<10?2:0),5,26+i*(h-55)/4);}
+ function line(key,color){ctx.strokeStyle=color;ctx.lineWidth=2.5;ctx.beginPath();data.forEach((d,i)=>i?ctx.lineTo(x(i),y(d[key])):ctx.moveTo(x(i),y(d[key])));ctx.stroke();data.forEach((d,i)=>{ctx.fillStyle=color;ctx.beginPath();ctx.arc(x(i),y(d[key]),4,0,Math.PI*2);ctx.fill();});}
+ if(dual){line("a","#57d8ff");line("b","#ff7189");ctx.fillStyle="#57d8ff";ctx.fillText(labelA,55,14);ctx.fillStyle="#ff7189";ctx.fillText(labelB,155,14);}
+}
+function exportCSV(){
+ if(!historyData.length){setStatus("No saved results to export.",true);return;}
+ const headers=["timestamp","target_frequency_MHz","NW_um","PW_um","VDD_V","ML_predicted_frequency_MHz","Cadence_frequency_MHz","frequency_absolute_error_MHz","frequency_error_percent","ML_predicted_average_power_mW","Cadence_average_power_mW","power_absolute_error_mW","power_error_percent"];
+ const rows=historyData.map(r=>[r.date,r.target,r.nw,r.pw,r.vdd,r.predFreq,r.cadence,r.freqAbs,r.freqPct,r.predPower,r.cadPower,r.powerAbs,r.powerPct??""]);
+ const csv=[headers,...rows].map(row=>row.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(",")).join("\n");
+ const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="MKS_Ring_VCO_ML_Cadence_Verification.csv";a.click();URL.revokeObjectURL(a.href);
+}
+function clearHistory(){if(confirm("Clear all locally saved Cadence measurements?")){historyData=[];localStorage.removeItem("mks_ringvco_history");render();}}
+render();calculate();
+</script>
+</body></html>
