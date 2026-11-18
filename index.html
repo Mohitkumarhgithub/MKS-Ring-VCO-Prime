@@ -126,8 +126,28 @@ section{padding:36px 0;scroll-margin-top:82px}.section-head{margin-bottom:22px}.
 </div>
 <div class="glass card" style="margin-top:16px"><div class="eyebrow">07 · Cadence verification</div><h3>Enter your measured simulation results</h3><p class="hint">After running Cadence, enter the steady-state oscillation frequency and average power. The website compares them with the ML predictions for this design.</p>
  <div class="controls" style="margin-top:15px">
-  <div class="field"><label for="cadfreq">Cadence measured frequency (MHz)</label><input id="cadfreq" type="number" min="0" step="any" placeholder="Measured frequency"></div>
-  <div class="field"><label for="power">Cadence average power (mW)</label><input id="power" type="number" min="0" step="any" placeholder="Average power"></div>
+
+<div class="field">
+  <label for="cadfreq">Cadence measured frequency</label>
+  <input id="cadfreq" type="number" min="0" step="any" placeholder="Enter value">
+  <select id="cadfreqUnit">
+    <option value="Hz">Hz</option>
+    <option value="kHz">kHz</option>
+    <option value="MHz" selected>MHz</option>
+    <option value="GHz">GHz</option>
+  </select>
+</div>
+
+<div class="field">
+  <label for="power">Cadence average power</label>
+  <input id="power" type="number" min="0" step="any" placeholder="Enter value">
+  <select id="powerUnit">
+    <option value="W">W</option>
+    <option value="mW" selected>mW</option>
+    <option value="uW">µW</option>
+    <option value="nW">nW</option>
+  </select>
+</div>
  </div>
  <div class="actions"><button class="btn" onclick="saveRun()">Compare and save result</button><button class="btn secondary" onclick="exportCSV()">Download CSV</button></div>
  <div class="resultgrid" id="compareResults" style="display:none">
@@ -177,19 +197,82 @@ function resetDesign(){
  $("mlResults").style.display="none";$("compareResults").style.display="none";
  setStatus("Ready for a new target frequency.");
 }
+
 function saveRun(){
- if(!currentDesign){setStatus("Generate an ML design first. The comparison needs the predicted frequency and power.",true);return;}
- const cadence=Number($("cadfreq").value),cadPower=Number($("power").value);
- if(!(cadence>0)||!(cadPower>=0)||$("power").value===""){setStatus("Enter the measured Cadence frequency and average power before comparing.",true);return;}
- const freqAbs=Math.abs(cadence-currentDesign.predFreq),freqPct=freqAbs/Math.abs(cadence)*100;
- const powerAbs=Math.abs(cadPower-currentDesign.predPower),powerPct=(cadPower===0?(powerAbs===0?0:null):powerAbs/cadPower*100);
- const row={date:new Date().toLocaleString(),target:currentDesign.target,nw:currentDesign.nw,pw:currentDesign.pw,vdd:currentDesign.vdd,predFreq:currentDesign.predFreq,cadence,freqAbs,freqPct,predPower:currentDesign.predPower,cadPower,powerAbs,powerPct};
- historyData.push(row);localStorage.setItem("mks_ringvco_history",JSON.stringify(historyData));
- $("freqAbsErr").textContent=freqAbs.toFixed(4);$("freqPctErr").textContent=freqPct.toFixed(3)+"%";
- $("powerAbsErr").textContent=powerAbs.toFixed(6);$("powerPctErr").textContent=powerPct===null?"—":powerPct.toFixed(3)+"%";
- $("compareResults").style.display="grid";render();
- setStatus("Comparison saved in this browser. You can download the verification CSV.");
+  if(!currentDesign){
+    setStatus("Generate an ML design first.",true);
+    return;
+  }
+
+  const rawFreq = Number($("cadfreq").value);
+  const rawPower = Number($("power").value);
+
+  if(!(rawFreq > 0) || $("cadfreq").value === "" ||
+     !(rawPower >= 0) || $("power").value === ""){
+    setStatus("Enter valid Cadence frequency and power values.",true);
+    return;
+  }
+
+  // Convert all frequency values to MHz
+  const freqFactors = {
+    Hz: 1e-6,
+    kHz: 1e-3,
+    MHz: 1,
+    GHz: 1000
+  };
+
+  // Convert all power values to mW
+  const powerFactors = {
+    W: 1000,
+    mW: 1,
+    uW: 0.001,
+    nW: 0.000001
+  };
+
+  const cadence =
+    rawFreq * freqFactors[$("cadfreqUnit").value];
+
+  const cadPower =
+    rawPower * powerFactors[$("powerUnit").value];
+
+  const freqAbs = Math.abs(cadence-currentDesign.predFreq);
+  const freqPct = freqAbs/Math.abs(cadence)*100;
+
+  const powerAbs = Math.abs(cadPower-currentDesign.predPower);
+  const powerPct =
+    cadPower === 0
+      ? (powerAbs === 0 ? 0 : null)
+      : powerAbs/cadPower*100;
+
+  const row = {
+    date:new Date().toLocaleString(),
+    target:currentDesign.target,
+    nw:currentDesign.nw,
+    pw:currentDesign.pw,
+    vdd:currentDesign.vdd,
+    predFreq:currentDesign.predFreq,
+    cadence,
+    freqAbs,
+    freqPct,
+    predPower:currentDesign.predPower,
+    cadPower,
+    powerAbs,
+    powerPct
+  };
+
+  historyData.push(row);
+  localStorage.setItem("mks_ringvco_history",JSON.stringify(historyData));
+
+  $("freqAbsErr").textContent=freqAbs.toFixed(4);
+  $("freqPctErr").textContent=freqPct.toFixed(3)+"%";
+  $("powerAbsErr").textContent=powerAbs.toFixed(6);
+  $("powerPctErr").textContent=powerPct===null?"—":powerPct.toFixed(3)+"%";
+
+  $("compareResults").style.display="grid";
+  render();
+  setStatus("Comparison saved. All values converted to MHz and mW.");
 }
+
 function render(){
  const body=$("history").querySelector("tbody");
  if(!historyData.length){body.innerHTML='<tr><td colspan="11">No Cadence measurements saved yet.</td></tr>';}
