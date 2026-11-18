@@ -187,9 +187,7 @@ section{padding:36px 0;scroll-margin-top:82px}.section-head{margin-bottom:22px}.
 </div>
 
 <p class="mks-popup-disclaimer">
-  For educational and research purposes only.
-  Predictions are estimates and should be verified
-  through Cadence simulation.
+For educational and research purposes only. Design recommendations are preliminary estimates and should be verified through Cadence simulation
 </p>
 
   </div>
@@ -262,9 +260,9 @@ section{padding:36px 0;scroll-margin-top:82px}.section-head{margin-bottom:22px}.
 <div class="glass card" style="margin-top:16px"><h3>First-order frequency relation</h3><div class="equation">f<sub>osc</sub> ≈ 1 / (2 N t<sub>d</sub>) &nbsp; ; &nbsp; N = 3</div><p>For a three-stage ring, f<sub>osc</sub> ≈ 1/(6t<sub>d</sub>). This is an approximate relation assuming similar stage delays and a simplified transition model. Extract the actual frequency from the Cadence transient waveform rather than relying only on this equation.</p></div>
 </section>
 
-<section id="cadence"><div class="section-head"><div class="eyebrow">05 · Design and simulation</div><h2>Build and simulate in Cadence</h2><p>Use the ML-recommended NW, PW and VDD values in the corresponding transistor properties. The website does not need your Cadence screenshots or project files.</p></div>
+<section id="cadence"><div class="section-head"><div class="eyebrow">05 · Design and simulation</div><h2>Build and Simulate in Cadence Using Recommended Design Parameters</h2><p>Use the recommended NW, PW and VDD values in the corresponding transistor properties. The website does not need your Cadence screenshots or project files.</p></div>
 <div class="grid2">
- <div class="glass card"><span class="tag">NMOS · n18 device model</span><h3>NMOS properties</h3><table class="data-table"><tbody><tr><td>Model name</td><td>n18</td></tr><tr><td>Gate length (L)</td><td>0.18 µm</td></tr><tr><td>Finger width</td><td><b>NW — ML recommendation</b></td></tr><tr><td>Number of fingers (nf)</td><td>1 (reference setup)</td></tr></tbody></table><p class="hint">In the NMOS CDF properties, enter the recommended NW in the finger-width field used by your schematic variable.</p></div>
+ <div class="glass card"><span class="tag">NMOS · n18 device model</span><h3>NMOS properties</h3><table class="data-table"><tbody><tr><td>Model name</td><td>n18</td></tr><tr><td>Gate length (L)</td><td>0.18 µm</td></tr><tr><td>Finger width</td><td><b>NW — Design Recommendations</b></td></tr><tr><td>Number of fingers (nf)</td><td>1 (reference setup)</td></tr></tbody></table><p class="hint">In the NMOS CDF properties, enter the recommended NW in the finger-width field used by your schematic variable.</p></div>
  <div class="glass card"><span class="tag">PMOS · p18 device model</span><h3>PMOS properties</h3><table class="data-table"><tbody><tr><td>Model name</td><td>p18</td></tr><tr><td>Gate length (L)</td><td>0.18 µm</td></tr><tr><td>Finger width</td><td><b>PW — ML recommendation</b></td></tr><tr><td>Number of fingers (nf)</td><td>1 (reference setup)</td></tr></tbody></table><p class="hint">In the PMOS CDF properties, enter the recommended PW in the finger-width field used by your schematic variable.</p></div>
 </div>
 <div class="glass card" style="margin-top:16px"><span class="tag">Three-stage ring · functional block diagram</span><h3>Three inverter stages connected in a feedback loop</h3>
@@ -280,7 +278,7 @@ section{padding:36px 0;scroll-margin-top:82px}.section-head{margin-bottom:22px}.
 <div class="glass card" style="margin-top:16px"><h3>Cadence simulation procedure</h3><ol style="color:#afc0d6;line-height:1.9;font-size:14px;padding-left:20px"><li>Open your three-stage ring VCO schematic in Cadence Virtuoso.</li><li>Set the NMOS finger-width variable to the recommended <b>NW</b>.</li><li>Set the PMOS finger-width variable to the recommended <b>PW</b>.</li><li>Set the supply source to the recommended <b>VDD</b>.</li><li>Keep the gate length and finger count consistent with your selected 180 nm design setup.</li><li>Run transient analysis and wait until the waveform reaches steady-state oscillation.</li><li>Measure the output period/frequency and average power, then enter those measured values below.</li></ol><div class="note">The n18/p18 labels above are model labels from the reference device setup. The page uses generic 180 nm CMOS wording and does not identify a foundry or PDK vendor. Confirm the parameter units in your own PDK before simulation.</div></div>
 </section>
 
-<section id="tuning"><div class="section-head"><div class="eyebrow">06 · ML inverse design</div><h2>Enter target frequency → get transistor sizing</h2><p>Enter a target frequency. The connected Extra Trees models will search for a suitable NW, PW and VDD combination and estimate frequency and average power.</p></div>
+<section id="tuning"><div class="section-head"><div class="eyebrow">06 · Target-Based Design</div><h2>Enter target frequency → get transistor sizing</h2><p>Enter a target frequency. The connected Extra Trees models will search for a suitable NW, PW and VDD combination and estimate frequency and average power.</p></div>
 <div class="glass card">
   <div class="controls">
     <div class="field">
@@ -296,15 +294,10 @@ section{padding:36px 0;scroll-margin-top:82px}.section-head{margin-bottom:22px}.
 </div>
 
 <p class="hint">
-  For research and educational use only. Verify ML results in Cadence.
+  For research and educational use only. Verify results in Cadence.
 </p>
 
 </div>
-
-
-<p class="hint">
-  For research and educational use only. Verify ML results in Cadence.
-</p>
 
 </div>
  <p class="hint">Enter a target within the model's measured training range for the most reliable recommendation. The range is guidance, not a hard input limit. Predictions outside the training range are extrapolations and may be unreliable.</p>
@@ -314,8 +307,8 @@ section{padding:36px 0;scroll-margin-top:82px}.section-head{margin-bottom:22px}.
    <div class="resultbox"><small>NMOS finger width</small><div class="big" id="recNW">—</div><small>NW (µm)</small></div>
    <div class="resultbox"><small>PMOS finger width</small><div class="big" id="recPW">—</div><small>PW (µm)</small></div>
    <div class="resultbox"><small>Supply voltage</small><div class="big" id="recVDD">—</div><small>VDD (V)</small></div>
-   <div class="resultbox"><small>ML predicted frequency</small><div class="big" id="predFreq">—</div><small>MHz</small></div>
-   <div class="resultbox"><small>ML predicted average power</small><div class="big" id="predPower">—</div><small>mW</small></div>
+   <div class="resultbox"><small>Estimated Frequency </small><div class="big" id="predFreq">—</div><small>MHz</small></div>
+   <div class="resultbox"><small>Estimated average power</small><div class="big" id="predPower">—</div><small>mW</small></div>
    <div class="resultbox"><small>Target frequency error</small><div class="big" id="targetErr">—</div><small>Absolute percentage difference</small></div>
   </div>
   <div class="note" style="margin-top:14px">Copy these NW, PW and VDD values into your Cadence design variables and corresponding NMOS/PMOS properties. Then run transient simulation and enter the measured results below.</div>
