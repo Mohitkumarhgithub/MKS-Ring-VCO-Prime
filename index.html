@@ -324,8 +324,11 @@ For educational and research purposes only. Design recommendations are prelimina
    <div class="resultbox"><small>PMOS finger width</small><div class="big" id="recPW">—</div><small>PW (µm)</small></div>
    <div class="resultbox"><small>Supply voltage</small><div class="big" id="recVDD">—</div><small>VDD (V)</small></div>
    <div class="resultbox"><small>Estimated Frequency </small><div class="big" id="predFreq">—</div><small>MHz</small></div>
-   <div class="resultbox"><small>Estimated average power</small><div class="big" id="predPower">—</div><small>mW</small></div>
-   <div class="resultbox"><small>Target frequency error</small><div class="big" id="targetErr">—</div><small>Absolute percentage difference</small></div>
+<div class="resultbox">
+  <small>Estimated Average Power</small>
+  <div class="big" id="predPower">—</div>
+  <small>Power consumption</small>
+</div>   <div class="resultbox"><small>Target frequency error</small><div class="big" id="targetErr">—</div><small>Absolute percentage difference</small></div>
   </div>
   <div class="note" style="margin-top:14px">Copy these NW, PW and VDD values into your Cadence design variables and corresponding NMOS/PMOS properties. Then run transient simulation and enter the measured results below.</div>
  </div>
@@ -417,7 +420,12 @@ setStatus("Connecting to MKS Server… Preparing your optimized VCO design.");
   const d=await res.json();
   currentDesign={target:target,nw:Number(d.nw_um),pw:Number(d.pw_um),vdd:Number(d.vdd_v),predFreq:Number(d.predicted_frequency_mhz),predPower:Number(d.predicted_power_mw),targetErr:Number(d.target_error_percent)};
   $("recNW").textContent=currentDesign.nw.toFixed(6);$("recPW").textContent=currentDesign.pw.toFixed(6);$("recVDD").textContent=currentDesign.vdd.toFixed(3);
-  $("predFreq").textContent=currentDesign.predFreq.toFixed(3);$("predPower").textContent=currentDesign.predPower.toFixed(6);$("targetErr").textContent=currentDesign.targetErr.toFixed(3)+"%";
+  $("predFreq").textContent=currentDesign.predFreq.toFixed(3);const p = currentDesign.predPower;
+
+$("predPower").textContent =
+  p >= 1 ? p.toFixed(3) + " mW" :
+  p >= 0.001 ? (p * 1000).toFixed(3) + " µW" :
+  (p * 1000000).toFixed(3) + " nW";$("targetErr").textContent=currentDesign.targetErr.toFixed(3)+"%";
   $("mlResults").style.display="block";setStatus(d.warning||"Design recommendation generated. Enter these values in Cadence and run transient simulation.");
  }catch(e){setStatus("Could not obtain an ML recommendation: "+e.message+". Check that the Python backend is running and API_BASE is correct.",true);}
 }
