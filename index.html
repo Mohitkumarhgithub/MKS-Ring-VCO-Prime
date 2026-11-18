@@ -16,9 +16,184 @@ section{padding:36px 0;scroll-margin-top:82px}.section-head{margin-bottom:22px}.
 .controls{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:7px}.field input,.field select{width:100%;background:rgba(2,9,20,.75);border:1px solid rgba(120,180,240,.3);border-radius:11px;color:white;padding:12px;font-size:14px;outline:none}.field input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #4acbff1b}.btn{border:0;border-radius:12px;padding:12px 18px;color:#04101d;font-weight:800;background:linear-gradient(100deg,var(--cyan),#83aaff);cursor:pointer;box-shadow:0 8px 25px #32aaff25}.btn.secondary{background:rgba(120,170,230,.13);color:#dceeff;border:1px solid var(--line);box-shadow:none}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.hint{font-size:12px;color:var(--muted);line-height:1.6;margin-top:10px}.resultgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}.resultbox{padding:18px;border-radius:15px;background:rgba(0,7,17,.48);border:1px solid var(--line)}.resultbox .big{font-size:27px;font-weight:800;color:var(--cyan)}.resultbox small{color:var(--muted)}.chartbox{padding:16px}.chartbox h3{font-size:15px;margin:0 0 12px}.chartbox canvas{width:100%;height:230px;display:block}.status{color:var(--green);font-size:12px;margin-top:10px}.warning{color:#ffd28b}.footer{padding:35px 0 55px;color:#8195b0;font-size:12px;border-top:1px solid var(--line);margin-top:35px}
 @media(max-width:800px){.hero{grid-template-columns:1fr;padding-top:50px}.links{display:none}.grid2,.grid3,.device-grid,.resultgrid{grid-template-columns:1fr}.controls{grid-template-columns:1fr 1fr}.stage-row{gap:9px}.stage{padding:12px 6px;min-height:116px}.stage strong{font-size:13px}.stage small{font-size:10px}.stage:not(:last-child):after{right:-12px;font-size:13px}.metrics{grid-template-columns:1fr 1fr 1fr}}
 @media(max-width:480px){.controls{grid-template-columns:1fr 1fr}.card{padding:17px}.hero{padding-bottom:25px}.stage-row{gap:6px}.stage:not(:last-child):after{right:-10px}}
+/* ===== MKS GLASS POPUP ===== */
+
+.mks-popup-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(3, 10, 25, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.mks-popup {
+  position: relative;
+  width: min(460px, 100%);
+  padding: 42px 32px 30px;
+  text-align: center;
+  overflow: hidden;
+  border-radius: 26px;
+  background: linear-gradient(
+    135deg,
+    rgba(35, 75, 115, 0.78),
+    rgba(12, 20, 43, 0.90)
+  );
+  border: 1px solid rgba(105, 215, 255, 0.42);
+  box-shadow:
+    0 25px 80px rgba(0,0,0,.55),
+    0 0 35px rgba(50,190,255,.20);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  animation: mksGlassIn .55s ease both;
+}
+
+.mks-popup::before {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  top: -130px;
+  left: calc(50% - 110px);
+  background: rgba(66,205,255,.22);
+  filter: blur(55px);
+  pointer-events: none;
+}
+
+.mks-popup-close {
+  position: absolute;
+  top: 14px;
+  right: 17px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.2);
+  background: rgba(255,255,255,.08);
+  color: white;
+  font-size: 23px;
+  cursor: pointer;
+}
+
+.mks-popup-icon {
+  font-size: 35px;
+  margin-bottom: 14px;
+}
+
+.mks-popup-tag {
+  color: #55d9ff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.mks-popup h2 {
+  color: #f1f7ff;
+  font-size: 29px;
+  margin: 19px 0 12px;
+  line-height: 1.2;
+}
+
+.mks-popup p {
+  color: #c2d2e8;
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 0 auto;
+  max-width: 350px;
+}
+
+.mks-popup-line {
+  width: 65px;
+  height: 2px;
+  margin: 25px auto;
+  background: linear-gradient(
+    90deg, transparent, #55d9ff, transparent
+  );
+}
+
+.mks-popup-btn {
+  padding: 13px 25px;
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 12px;
+  background: linear-gradient(100deg,#36c7f4,#83aaff);
+  color: #071525;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.mks-popup-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(55,190,255,.3);
+}
+
+.mks-popup-footer {
+  color: #8da8c5;
+  font-size: 11px;
+  letter-spacing: 1px;
+  margin-top: 22px;
+}
+
+@keyframes mksGlassIn {
+  from {
+    opacity: 0;
+    transform: translateY(25px) scale(.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.mks-popup-disclaimer {
+  margin: 15px auto 0 !important;
+  max-width: 340px;
+  color: #8299b5 !important;
+  font-size: 10px !important;
+  line-height: 1.6 !important;
+  letter-spacing: .2px;
+  opacity: .9;
+}
 </style>
 </head>
 <body>
+<!-- MKS GLASS WELCOME POPUP -->
+<div id="mksWelcomePopup" class="mks-popup-overlay">
+  <div class="mks-popup">
+
+    <button class="mks-popup-close" onclick="closeMKSPopup()">×</button>
+
+    <div class="mks-popup-icon">⚡</div>
+    <div class="mks-popup-tag">WELCOME TO MKS VCO LAB</div>
+
+    <h2>Explore the Ring VCO</h2>
+
+    <p>
+      Discover the three-stage CMOS Ring VCO,
+      Cadence simulation and ML-based frequency design.
+    </p>
+
+    <div class="mks-popup-line"></div>
+
+    <button class="mks-popup-btn" onclick="closeMKSPopup()">
+      Explore Website →
+    </button>
+
+   <div class="mks-popup-footer">
+  180 nm CMOS · VCO Research
+</div>
+
+<p class="mks-popup-disclaimer">
+  For educational and research purposes only.
+  ML predictions are estimates and should be verified
+  through Cadence simulation.
+</p>
+
+  </div>
+</div>
 <header class="nav"><div class="wrap navin"><div class="brand">MKS <span>VCO LAB</span></div><nav class="links"><a href="#principle">Principle</a><a href="#inverter">CMOS Inverter</a><a href="#cadence">Cadence</a><a href="#tuning">Tuning</a><a href="#results">Results</a></nav></div></header>
 <main class="wrap">
 <div class="hero">
@@ -107,8 +282,31 @@ section{padding:36px 0;scroll-margin-top:82px}.section-head{margin-bottom:22px}.
 
 <section id="tuning"><div class="section-head"><div class="eyebrow">06 · ML inverse design</div><h2>Enter target frequency → get transistor sizing</h2><p>Enter a target frequency. The connected Extra Trees models will search for a suitable NW, PW and VDD combination and estimate frequency and average power.</p></div>
 <div class="glass card">
- <div class="controls"><div class="field"><label for="target">Target frequency (MHz)</label><input id="target" type="number" min="0.001" step="any" placeholder="e.g. 2500"></div></div>
- <div class="actions"><button class="btn" onclick="getDesign()">Generate ML design</button><button class="btn secondary" onclick="resetDesign()">New target</button></div>
+  <div class="controls">
+    <div class="field">
+      <label for="target">Target frequency (MHz)</label>
+      <input id="target" type="number" min="0.001" step="any" placeholder="e.g. 2500">
+      <p class="hint">Recommended range: 260.477–6953.942 MHz.</p>
+    </div>
+  </div>
+
+  <div class="actions">
+  <button class="btn" onclick="getDesign()">Generate ML design</button>
+  <button class="btn secondary" onclick="resetDesign()">New target</button>
+</div>
+
+<p class="hint">
+  For research and educational use only. Verify ML results in Cadence.
+</p>
+
+</div>
+
+
+<p class="hint">
+  For research and educational use only. Verify ML results in Cadence.
+</p>
+
+</div>
  <p class="hint">Enter a target within the model's measured training range for the most reliable recommendation. The range is guidance, not a hard input limit. Predictions outside the training range are extrapolations and may be unreliable.</p>
  <div id="mlResults" style="display:none;margin-top:18px">
   <h3>Recommended design parameters</h3>
@@ -181,7 +379,7 @@ async function getDesign(){
  if(!API_BASE && location.protocol!=="file:" && !location.hostname.includes("localhost")){
    setStatus("The website interface is ready, but the Python ML backend URL has not been connected yet. Configure API_BASE after deploying the model backend.",true);return;
  }
- setStatus("Requesting a recommendation from the Extra Trees models…");
+setStatus("Connecting to MKS Server… Preparing your optimized VCO design.");
  try{
   const res=await fetch(`${API_BASE}/api/design`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({target_frequency_mhz:target})});
   if(!res.ok)throw new Error(`Backend returned HTTP ${res.status}`);
@@ -299,6 +497,22 @@ function exportCSV(){
  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="MKS_Ring_VCO_ML_Cadence_Verification.csv";a.click();URL.revokeObjectURL(a.href);
 }
 function clearHistory(){if(confirm("Clear all locally saved Cadence measurements?")){historyData=[];localStorage.removeItem("mks_ringvco_history");render();}}
-render();calculate();
+render();
+</script>
+<script>
+function closeMKSPopup() {
+  const popup = document.getElementById("mksWelcomePopup");
+  if (popup) popup.style.display = "none";
+}
+
+window.addEventListener("load", function () {
+  setTimeout(function () {
+    const popup = document.getElementById("mksWelcomePopup");
+
+    if (popup) {
+      popup.style.display = "flex";
+    }
+  }, 4500);
+});
 </script>
 </body></html>
