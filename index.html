@@ -172,8 +172,7 @@ section{padding:36px 0;scroll-margin-top:82px}.section-head{margin-bottom:22px}.
     <h2>Explore the Ring VCO</h2>
 
     <p>
-      Discover the three-stage CMOS Ring VCO,
-      Cadence simulation and ML-based frequency design.
+Explore three-stage CMOS Ring VCO design, performance analysis, and Cadence verification.
     </p>
 
     <div class="mks-popup-line"></div>
@@ -194,8 +193,26 @@ For educational and research purposes only. Design recommendations are prelimina
 </div>
 <header class="nav"><div class="wrap navin"><div class="brand">MKS <span>VCO LAB</span></div><nav class="links"><a href="#principle">Principle</a><a href="#inverter">CMOS Inverter</a><a href="#cadence">Cadence</a><a href="#tuning">Tuning</a><a href="#results">Results</a></nav></div></header>
 <main class="wrap">
-<div class="hero">
- <div><div class="eyebrow">CMOS oscillator study · 180 nm</div><h1>Three-Stage<br><em>Ring VCO</em></h1><p class="lead">A compact study of a voltage-controlled ring oscillator built from three CMOS inverter stages. Explore the inverter operation, loop oscillation condition, delay-based frequency control, Cadence simulation setup, and measured results.</p><div class="chips"><span class="chip">3-stage inverter ring</span><span class="chip">NMOS + PMOS</span><span class="chip">180 nm CMOS</span><span class="chip">Cadence Virtuoso</span></div></div>
+
+ <div class="hero">
+ <div>
+  <div class="eyebrow">THREE-STAGE CMOS RING VCO · 180 NM</div>
+
+  <h1>Design.<br><em>Simulate. Analyze.</em></h1>
+
+  <p class="lead">
+    Explore three-stage CMOS Ring VCO design through intelligent design
+    recommendations, frequency and power estimation, and Cadence
+    simulation verification.
+  </p>
+
+  <div class="chips">
+    <span class="chip">3-stage inverter ring</span>
+    <span class="chip">NMOS + PMOS</span>
+    <span class="chip">180 nm CMOS</span>
+    <span class="chip">Cadence Virtuoso</span>
+  </div>
+ </div>
  <div class="glass hero-visual" style="padding:22px 20px 18px">
   <p class="mini-title">Inside the oscillation loop</p>
   <div style="position:relative;padding:4px 0 0">
@@ -263,7 +280,7 @@ For educational and research purposes only. Design recommendations are prelimina
 <section id="cadence"><div class="section-head"><div class="eyebrow">05 · Design and simulation</div><h2>Build and Simulate in Cadence Using Recommended Design Parameters</h2><p>Use the recommended NW, PW and VDD values in the corresponding transistor properties. The website does not need your Cadence screenshots or project files.</p></div>
 <div class="grid2">
  <div class="glass card"><span class="tag">NMOS · n18 device model</span><h3>NMOS properties</h3><table class="data-table"><tbody><tr><td>Model name</td><td>n18</td></tr><tr><td>Gate length (L)</td><td>0.18 µm</td></tr><tr><td>Finger width</td><td><b>NW — Design Recommendations</b></td></tr><tr><td>Number of fingers (nf)</td><td>1 (reference setup)</td></tr></tbody></table><p class="hint">In the NMOS CDF properties, enter the recommended NW in the finger-width field used by your schematic variable.</p></div>
- <div class="glass card"><span class="tag">PMOS · p18 device model</span><h3>PMOS properties</h3><table class="data-table"><tbody><tr><td>Model name</td><td>p18</td></tr><tr><td>Gate length (L)</td><td>0.18 µm</td></tr><tr><td>Finger width</td><td><b>PW — ML recommendation</b></td></tr><tr><td>Number of fingers (nf)</td><td>1 (reference setup)</td></tr></tbody></table><p class="hint">In the PMOS CDF properties, enter the recommended PW in the finger-width field used by your schematic variable.</p></div>
+ <div class="glass card"><span class="tag">PMOS · p18 device model</span><h3>PMOS properties</h3><table class="data-table"><tbody><tr><td>Model name</td><td>p18</td></tr><tr><td>Gate length (L)</td><td>0.18 µm</td></tr><tr><td>Finger width</td><td><b>PW — Design Recommendation</b></td></tr><tr><td>Number of fingers (nf)</td><td>1 (reference setup)</td></tr></tbody></table><p class="hint">In the PMOS CDF properties, enter the recommended PW in the finger-width field used by your schematic variable.</p></div>
 </div>
 <div class="glass card" style="margin-top:16px"><span class="tag">Three-stage ring · functional block diagram</span><h3>Three inverter stages connected in a feedback loop</h3>
 <svg viewBox="0 0 900 260" role="img" aria-label="Three CMOS inverter blocks connected in a ring with feedback" style="width:100%;height:auto;display:block">
@@ -278,7 +295,7 @@ For educational and research purposes only. Design recommendations are prelimina
 <div class="glass card" style="margin-top:16px"><h3>Cadence simulation procedure</h3><ol style="color:#afc0d6;line-height:1.9;font-size:14px;padding-left:20px"><li>Open your three-stage ring VCO schematic in Cadence Virtuoso.</li><li>Set the NMOS finger-width variable to the recommended <b>NW</b>.</li><li>Set the PMOS finger-width variable to the recommended <b>PW</b>.</li><li>Set the supply source to the recommended <b>VDD</b>.</li><li>Keep the gate length and finger count consistent with your selected 180 nm design setup.</li><li>Run transient analysis and wait until the waveform reaches steady-state oscillation.</li><li>Measure the output period/frequency and average power, then enter those measured values below.</li></ol><div class="note">The n18/p18 labels above are model labels from the reference device setup. The page uses generic 180 nm CMOS wording and does not identify a foundry or PDK vendor. Confirm the parameter units in your own PDK before simulation.</div></div>
 </section>
 
-<section id="tuning"><div class="section-head"><div class="eyebrow">06 · Target-Based Design</div><h2>Enter target frequency → get transistor sizing</h2><p>Enter a target frequency. The connected Extra Trees models will search for a suitable NW, PW and VDD combination and estimate frequency and average power.</p></div>
+<section id="tuning"><div class="section-head"><div class="eyebrow">06 · Target-Based Design</div><h2>Enter target frequency → get transistor sizing</h2><p>Enter your target frequency to obtain suitable transistor sizing parameters and estimated frequency and average power.</p></div>
 <div class="glass card">
   <div class="controls">
     <div class="field">
@@ -289,7 +306,7 @@ For educational and research purposes only. Design recommendations are prelimina
   </div>
 
   <div class="actions">
-  <button class="btn" onclick="getDesign()">Generate ML design</button>
+<button class="btn" onclick="getDesign()">Generate Design</button>
   <button class="btn secondary" onclick="resetDesign()">New target</button>
 </div>
 
@@ -300,8 +317,7 @@ For educational and research purposes only. Design recommendations are prelimina
 </div>
 
 </div>
- <p class="hint">Enter a target within the model's measured training range for the most reliable recommendation. The range is guidance, not a hard input limit. Predictions outside the training range are extrapolations and may be unreliable.</p>
- <div id="mlResults" style="display:none;margin-top:18px">
+<p class="hint">For more reliable results, use a target within the recommended operating range. Results outside this range may be less reliable and should be carefully verified.</p> <div id="mlResults" style="display:none;margin-top:18px">
   <h3>Recommended design parameters</h3>
   <div class="resultgrid">
    <div class="resultbox"><small>NMOS finger width</small><div class="big" id="recNW">—</div><small>NW (µm)</small></div>
@@ -352,12 +368,34 @@ For educational and research purposes only. Design recommendations are prelimina
 
 <section id="results"><div class="section-head"><div class="eyebrow">07 · Results and verification</div><h2>Simulation results dashboard</h2><p>Each saved row represents a Cadence run entered by you. The charts update from those saved measurements. No synthetic Cadence data is inserted.</p></div>
 <div class="grid2">
- <div class="glass chartbox"><h3>ML-predicted vs Cadence frequency (MHz)</h3><canvas id="freqChart" width="600" height="260"></canvas></div>
- <div class="glass chartbox"><h3>ML-predicted vs Cadence average power (mW)</h3><canvas id="powerChart" width="600" height="260"></canvas></div>
+ <div class="glass chartbox"><h3>Estimated vs Cadence-Verified Frequency</h3><canvas id="freqChart" width="600" height="260"></canvas></div>
+ <div class="glass chartbox"><h3>Estimated vs Cadence-Verified Power</h3><canvas id="powerChart" width="600" height="260"></canvas></div>
 </div>
-<div class="glass card" style="margin-top:16px;overflow-x:auto"><h3>Saved Cadence verification table</h3><table class="data-table" id="history"><thead><tr><th>#</th><th>Target (MHz)</th><th>NW (µm)</th><th>PW (µm)</th><th>VDD (V)</th><th>ML freq. (MHz)</th><th>Cadence freq. (MHz)</th><th>Freq. abs. error (%)</th><th>ML power (mW)</th><th>Cadence power (mW)</th><th>Power abs. error (%)</th></tr></thead><tbody><tr><td colspan="11">No Cadence measurements saved yet.</td></tr></tbody></table><div class="actions"><button class="btn secondary" onclick="clearHistory()">Clear local history</button></div><p class="hint">Results are stored locally in this visitor’s browser. No login or mandatory submission is required. Visitors can download their own CSV.</p></div>
+<div class="glass card" style="margin-top:16px;overflow-x:auto"><h3>Saved Cadence verification table</h3><table class="data-table" id="history"><thead><tr><th>#</th><th>Target (MHz)</th><th>NW (µm)</th><th>PW (µm)</th><th>VDD (V)</th><th>Estimated freq. (MHz)</th><th>Cadence freq. (MHz)</th><th>Freq. abs. error (%)</th><th>Estimated power (mW)</th><th>Cadence power (mW)</th><th>Power abs. error (%)</th></tr></thead><tbody><tr><td colspan="11">No Cadence measurements saved yet.</td></tr></tbody></table><div class="actions"><button class="btn secondary" onclick="clearHistory()">Clear local history</button></div><p class="hint">Results are stored locally in this visitor’s browser. No login or mandatory submission is required. Visitors can download their own CSV.</p></div>
 </section>
-<div class="footer">MKS VCO LAB · Three-stage CMOS Ring VCO · Educational and research presentation. Replace illustrative descriptions with final measured values and verified PDK parameters before publication.</div>
+<div class="footer">
+  <div style="text-align:center">
+    <div style="font-size:19px;font-weight:800;letter-spacing:3px;color:#57d8ff;margin-bottom:12px">
+      MKS VCO LAB
+    </div>
+
+    <div style="font-size:14px;color:#edf5ff;font-weight:600;margin-bottom:8px">
+      Designed &amp; Developed by Mohit Kumar Sharma (MKS)
+    </div>
+
+    <p style="max-width:650px;margin:0 auto 14px;line-height:1.8">
+      An independent VLSI engineering initiative focused on CMOS oscillator design, performance analysis, and circuit verification.
+    </p>
+
+    <p style="font-size:11px;line-height:1.8;color:#8195b0;margin:0 auto">
+      For educational and research purposes only. Design recommendations are estimates and should be verified through Cadence simulation using the applicable PDK parameters.
+    </p>
+
+    <div style="margin-top:18px;font-size:10px;letter-spacing:1px;color:#627995">
+      © 2026 MKS VCO LAB · ALL RIGHTS RESERVED
+    </div>
+  </div>
+</div>
 </main>
 <script>
 const $=id=>document.getElementById(id);
@@ -380,7 +418,7 @@ setStatus("Connecting to MKS Server… Preparing your optimized VCO design.");
   currentDesign={target:target,nw:Number(d.nw_um),pw:Number(d.pw_um),vdd:Number(d.vdd_v),predFreq:Number(d.predicted_frequency_mhz),predPower:Number(d.predicted_power_mw),targetErr:Number(d.target_error_percent)};
   $("recNW").textContent=currentDesign.nw.toFixed(6);$("recPW").textContent=currentDesign.pw.toFixed(6);$("recVDD").textContent=currentDesign.vdd.toFixed(3);
   $("predFreq").textContent=currentDesign.predFreq.toFixed(3);$("predPower").textContent=currentDesign.predPower.toFixed(6);$("targetErr").textContent=currentDesign.targetErr.toFixed(3)+"%";
-  $("mlResults").style.display="block";setStatus(d.warning||"ML recommendation generated. Enter these values in Cadence and run transient simulation.");
+  $("mlResults").style.display="block";setStatus(d.warning||"Design recommendation generated. Enter these values in Cadence and run transient simulation.");
  }catch(e){setStatus("Could not obtain an ML recommendation: "+e.message+". Check that the Python backend is running and API_BASE is correct.",true);}
 }
 function resetDesign(){
@@ -468,8 +506,8 @@ function render(){
  const body=$("history").querySelector("tbody");
  if(!historyData.length){body.innerHTML='<tr><td colspan="11">No Cadence measurements saved yet.</td></tr>';}
  else{body.innerHTML=historyData.map((r,i)=>`<tr><td>${i+1}</td><td>${r.target.toFixed(2)}</td><td>${r.nw.toFixed(6)}</td><td>${r.pw.toFixed(6)}</td><td>${r.vdd.toFixed(3)}</td><td>${r.predFreq.toFixed(3)}</td><td>${r.cadence.toFixed(3)}</td><td>${r.freqPct.toFixed(3)}</td><td>${r.predPower.toFixed(6)}</td><td>${r.cadPower.toFixed(6)}</td><td>${r.powerPct===null?"—":r.powerPct.toFixed(3)}</td></tr>`).join("");}
- drawChart("freqChart",historyData.map(r=>({a:r.predFreq,b:r.cadence})), "ML prediction","Cadence",true);
- drawChart("powerChart",historyData.map(r=>({a:r.predPower,b:r.cadPower})), "ML prediction","Cadence",true);
+ drawChart("freqChart",historyData.map(r=>({a:r.predFreq,b:r.cadence})), "Design estimate","Cadence",true);
+ drawChart("powerChart",historyData.map(r=>({a:r.predPower,b:r.cadPower})), "Design estimate","Cadence",true);
 }
 function drawChart(id,data,labelA,labelB,dual){
  const c=$(id),ctx=c.getContext("2d"),w=c.width,h=c.height;ctx.clearRect(0,0,w,h);
